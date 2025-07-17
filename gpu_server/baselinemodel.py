@@ -15,14 +15,12 @@ def main():
     from transformers import AutoConfig
     from neuralforecast import NeuralForecast
     from neuralforecast.models import TimeLLM
-    from neuralforecast.utils import AirPassengersPanel
     from transformers import AutoConfig
     import numpy as np
     import pandas as pd
     import matplotlib.pyplot as plt
     import yfinance as yf
     from neuralforecast import NeuralForecast
-    from neuralforecast.models import PatchTST
     from neuralforecast.losses.pytorch import DistributionLoss
     from neuralforecast.utils import augment_calendar_df
     import matplotlib as mpl
@@ -34,9 +32,8 @@ def main():
     #    return
     #print("hello")
     print(sys.argv)
-    string_value = sys.argv[1]  # 예: "ABCDE"
+    string_value = sys.argv[1]
     flag_value = sys.argv[2]
-    #flag_value = 10000
     feature_flags = parse_feature_flags(flag_value)
     print(f"선택된 feature flags: {feature_flags}")
 
@@ -91,14 +88,14 @@ def main():
         forecast_input['interest_rate'] = filtered_interest_df['DFEDTARU'].values
 
     nasdaq_df = pd.DataFrame({
-        'unique_id': [string_value] * len(nasdaq_data_reset),  # ✔️ 문자열로 반복
+        'unique_id': [string_value] * len(nasdaq_data_reset),
         'ds': nasdaq_data_reset['Date'],
         'y': nasdaq_data_reset['Close'],
-        **forecast_input  # ✔️ 키에 맞춰 열 추가
+        **forecast_input
     })
 
     nasdaq_df['ds'] = pd.to_datetime(nasdaq_df['ds'])
-    nasdaq_df = nasdaq_df[['unique_id', 'ds', 'y'] + list(forecast_input.keys())].copy()  # ✔️ 안전하게 컬럼 선택
+    nasdaq_df = nasdaq_df[['unique_id', 'ds', 'y'] + list(forecast_input.keys())].copy() 
 
         # 캘린더 특성 추가 (일별 빈도)
     nasdaq_df, calendar_cols = augment_calendar_df(df=nasdaq_df, freq='D')
