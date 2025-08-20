@@ -36,6 +36,7 @@ ollama run gemma3:12b
 - ngrok이 설치되어 있는지 확인
 - Ollama가 설치되어 있는지 확인
 - CUDA가 설치되어 있는지 확인
+- 'plots_sp500' 파일 압축 풀기
 - `plots_sp500` 파일이 없는 경우, 생성하는데 **RTX 5070 기준 약 3시간** 소요
 
 ---
@@ -43,7 +44,7 @@ ollama run gemma3:12b
 ## 4. 오류 발생 시 대처 방법
 
 1. **가상환경 문제**  
-`neuralforecast_timeforecast` 가상환경이 생성되지 않거나 실행되지 않을 경우, 첨부된 가상환경을 사용합니다.
+`neuralforecast_timeforecast` 가상환경이 생성되지 않거나 실행되지 않을 경우, **environment.yml**을 참고하세요.
 
 2. **문의**  
 추가적인 도움은 편하게 아래 이메일로 문의하세요.  
