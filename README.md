@@ -54,3 +54,4 @@ ollama run gemma3:12b
 
 1. 위의 사항을 명심한 후 github에 있는 모든 코드를 복사한 후, cmd로 해당 페이지로 이동한 후, start.bat을 실행하면 됩니다.
 2. start.bat을 실행하면 자동으로 neuralforecast_timeforecast 가상환경을 만들것입니다.
+3. ngrok에서 나온 주소를 render.com으로 들어가서 대시보드를 열고 .config에서 ai에 주소를 찾고 해당 주소로 변경해줍니다.
