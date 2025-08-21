@@ -40,16 +40,16 @@ os.makedirs("plots_sp500", exist_ok=True)
 # S&P500 구성 종목 가져오기 
 sp500_tickers = pd.read_html('https://en.wikipedia.org/wiki/List_of_S%26P_500_companies')[0]['Symbol'].tolist()
 feature_flags = {
-    'volume': False,
-    'open': True,
+    'volume': True,
+    'open': False,
     'high': True,
-    'low': True,
+    'low': False,
     'interest_rate': True,
-    'roe': True,
+    'roe': False,
     'roa': True,
-    'operating_margin': True,
+    'operating_margin': False,
     'net_margin': True,
-    's&p500': False,
+    's&p500': True,
     'per': True,
     'pbr': True,
     'psr': True
@@ -68,7 +68,7 @@ def process_ticker(ticker):
             print(f"{ticker}: 데이터 없음, 건너뜀")
             return None
 
-        df = df[['Date', 'Close', 'High', 'Open', 'Low', 'Volume']].copy()
+        df = df[['Date', 'Close', 'High','Volume']].copy()
         df['unique_id'] = ticker
         df['ds'] = pd.to_datetime(df['Date'])
         df['y'] = df['Close']
@@ -79,7 +79,7 @@ def process_ticker(ticker):
         balance = ticker_yf.balance_sheet.T
         income = ticker_yf.income_stmt.T
 
-        roe = (income["Net Income"] / balance["Stockholders Equity"]).dropna().sort_index()
+        #roe = (income["Net Income"] / balance["Stockholders Equity"]).dropna().sort_index()
         roa = (income["Net Income"] / balance["Total Assets"]).dropna().sort_index()
         if "Operating Income" in income and "Total Revenue" in income:
             operating_margin = (income["Operating Income"] / income["Total Revenue"]).dropna().sort_index()
@@ -94,7 +94,7 @@ def process_ticker(ticker):
         else:
             net_margin = pd.Series()
 
-        df['roe'] = roe.reindex(df['ds'], method='ffill').fillna(method='bfill').values
+        #df['roe'] = roe.reindex(df['ds'], method='ffill').fillna(method='bfill').values
         df['roa'] = roa.reindex(df['ds'], method='ffill').fillna(method='bfill').values
         #df['operating_margin'] = operating_margin.reindex(df['ds'], method='ffill').fillna(method='bfill').values
         #df['net_margin'] = net_margin.reindex(df['ds'], method='ffill').fillna(method='bfill').values
@@ -200,5 +200,6 @@ for idx, ticker in enumerate(sp500_tickers, 1):
     result = process_ticker(ticker)
     if result:
         results.append(result)
+
 
 
